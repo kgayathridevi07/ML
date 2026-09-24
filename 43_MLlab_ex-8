@@ -1,0 +1,595 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "8defe56e-d7e4-4a58-b2f9-a23c008a1016",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "import seaborn as sns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "2242714d-3e81-426e-bab1-25ea924207f1",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>age</th>\n",
+       "      <th>Gender</th>\n",
+       "      <th>Family</th>\n",
+       "      <th>diet</th>\n",
+       "      <th>Lifestyle</th>\n",
+       "      <th>cholestrol</th>\n",
+       "      <th>heartdisease</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   age  Gender  Family  diet  Lifestyle  cholestrol  heartdisease\n",
+       "0    0       0       1     1          3           0             1\n",
+       "1    0       1       1     1          3           0             1\n",
+       "2    1       0       0     0          2           1             1\n",
+       "3    4       0       1     1          3           2             0\n",
+       "4    3       1       1     0          0           2             0"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df = pd.read_csv('heartdisease.csv')\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "ca0c00f9-6e66-49e8-b04f-86b0e9aca832",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(500, 7)"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "75bf31b1-6b73-405d-b251-78e6680ca6e6",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "age             0\n",
+       "Gender          0\n",
+       "Family          0\n",
+       "diet            0\n",
+       "Lifestyle       0\n",
+       "cholestrol      0\n",
+       "heartdisease    0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "6d9e0fc0-136c-43fc-82cc-b380b09e99df",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 500 entries, 0 to 499\n",
+      "Data columns (total 7 columns):\n",
+      " #   Column        Non-Null Count  Dtype\n",
+      "---  ------        --------------  -----\n",
+      " 0   age           500 non-null    int64\n",
+      " 1   Gender        500 non-null    int64\n",
+      " 2   Family        500 non-null    int64\n",
+      " 3   diet          500 non-null    int64\n",
+      " 4   Lifestyle     500 non-null    int64\n",
+      " 5   cholestrol    500 non-null    int64\n",
+      " 6   heartdisease  500 non-null    int64\n",
+      "dtypes: int64(7)\n",
+      "memory usage: 27.5 KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "df.info() "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "37a5999c-67b7-4a89-91bf-6c5c901befdf",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>age</th>\n",
+       "      <th>Gender</th>\n",
+       "      <th>Family</th>\n",
+       "      <th>diet</th>\n",
+       "      <th>Lifestyle</th>\n",
+       "      <th>cholestrol</th>\n",
+       "      <th>heartdisease</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "      <td>500.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>1.980000</td>\n",
+       "      <td>0.472000</td>\n",
+       "      <td>0.624000</td>\n",
+       "      <td>0.992000</td>\n",
+       "      <td>1.516000</td>\n",
+       "      <td>1.026000</td>\n",
+       "      <td>0.602000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>1.469667</td>\n",
+       "      <td>0.499715</td>\n",
+       "      <td>0.484865</td>\n",
+       "      <td>0.770144</td>\n",
+       "      <td>1.025596</td>\n",
+       "      <td>0.801629</td>\n",
+       "      <td>0.489976</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>4.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "              age      Gender      Family        diet   Lifestyle  cholestrol  \\\n",
+       "count  500.000000  500.000000  500.000000  500.000000  500.000000  500.000000   \n",
+       "mean     1.980000    0.472000    0.624000    0.992000    1.516000    1.026000   \n",
+       "std      1.469667    0.499715    0.484865    0.770144    1.025596    0.801629   \n",
+       "min      0.000000    0.000000    0.000000    0.000000    0.000000    0.000000   \n",
+       "25%      1.000000    0.000000    0.000000    0.000000    1.000000    0.000000   \n",
+       "50%      2.000000    0.000000    1.000000    1.000000    2.000000    1.000000   \n",
+       "75%      3.000000    1.000000    1.000000    2.000000    2.000000    2.000000   \n",
+       "max      4.000000    1.000000    1.000000    2.000000    3.000000    2.000000   \n",
+       "\n",
+       "       heartdisease  \n",
+       "count    500.000000  \n",
+       "mean       0.602000  \n",
+       "std        0.489976  \n",
+       "min        0.000000  \n",
+       "25%        0.000000  \n",
+       "50%        1.000000  \n",
+       "75%        1.000000  \n",
+       "max        1.000000  "
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "9be53d68-037c-4be4-a2ca-17cb48bb3c5c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['age', 'Gender', 'Family', 'diet', 'Lifestyle', 'cholestrol',\n",
+       "       'heartdisease'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "03eaad37-9a7c-4249-a8e3-8004deb8e5c2",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: pgmpy==1.0.0 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (1.0.0)\n",
+      "Requirement already satisfied: networkx in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (3.6.1)\n",
+      "Requirement already satisfied: numpy in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (2.4.6)\n",
+      "Requirement already satisfied: scipy in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (1.17.1)\n",
+      "Requirement already satisfied: scikit-learn in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (1.9.0)\n",
+      "Requirement already satisfied: pandas in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (2.3.3)\n",
+      "Requirement already satisfied: torch in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (2.13.0)\n",
+      "Requirement already satisfied: statsmodels in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (0.14.6)\n",
+      "Requirement already satisfied: tqdm in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (4.70.0)\n",
+      "Requirement already satisfied: joblib in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (1.5.3)\n",
+      "Requirement already satisfied: opt-einsum in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (3.4.0)\n",
+      "Requirement already satisfied: pyro-ppl in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pgmpy==1.0.0) (1.9.1)\n",
+      "Requirement already satisfied: python-dateutil>=2.8.2 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pandas->pgmpy==1.0.0) (2.9.0.post0)\n",
+      "Requirement already satisfied: pytz>=2020.1 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pandas->pgmpy==1.0.0) (2026.3.post1)\n",
+      "Requirement already satisfied: tzdata>=2022.7 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pandas->pgmpy==1.0.0) (2026.3)\n",
+      "Requirement already satisfied: six>=1.5 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from python-dateutil>=2.8.2->pandas->pgmpy==1.0.0) (1.17.0)\n",
+      "Requirement already satisfied: pyro-api>=0.1.1 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from pyro-ppl->pgmpy==1.0.0) (0.1.2)\n",
+      "Requirement already satisfied: filelock in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (3.32.3)\n",
+      "Requirement already satisfied: typing-extensions>=4.10.0 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (4.16.0)\n",
+      "Requirement already satisfied: setuptools>=77.0.3 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (84.0.0)\n",
+      "Requirement already satisfied: sympy>=1.13.3 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (1.14.0)\n",
+      "Requirement already satisfied: jinja2 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (3.1.6)\n",
+      "Requirement already satisfied: fsspec>=0.8.5 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from torch->pgmpy==1.0.0) (2026.7.0)\n",
+      "Requirement already satisfied: mpmath<1.4,>=1.1.0 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from sympy>=1.13.3->torch->pgmpy==1.0.0) (1.3.0)\n",
+      "Requirement already satisfied: colorama in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from tqdm->pgmpy==1.0.0) (0.4.6)\n",
+      "Requirement already satisfied: MarkupSafe>=2.0 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from jinja2->torch->pgmpy==1.0.0) (3.0.3)\n",
+      "Requirement already satisfied: narwhals>=2.0.1 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from scikit-learn->pgmpy==1.0.0) (2.24.0)\n",
+      "Requirement already satisfied: threadpoolctl>=3.5.0 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from scikit-learn->pgmpy==1.0.0) (3.6.0)\n",
+      "Requirement already satisfied: patsy>=0.5.6 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from statsmodels->pgmpy==1.0.0) (1.0.2)\n",
+      "Requirement already satisfied: packaging>=21.3 in .\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages (from statsmodels->pgmpy==1.0.0) (26.3)\n"
+     ]
+    }
+   ],
+   "source": [
+    "!pip install pgmpy==1.0.0"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "01175463-4479-4f80-a826-6376a08f918f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1.0.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "import pgmpy \n",
+    "print(pgmpy.__version__)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "04ceac45-7faf-46fc-8372-80b66282639d",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "INFO:pgmpy: Datatype (N=numerical, C=Categorical Unordered, O=Categorical Ordered) inferred from data: \n",
+      " {'age': 'N', 'Gender': 'N', 'Family': 'N', 'diet': 'N', 'Lifestyle': 'N', 'cholestrol': 'N', 'heartdisease': 'N'}\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| Family          | Family(0)     | Family(0)     | ... | Family(1)     | Family(1)     | Family(1)     |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| Gender          | Gender(0)     | Gender(0)     | ... | Gender(1)     | Gender(1)     | Gender(1)     |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| Lifestyle       | Lifestyle(0)  | Lifestyle(0)  | ... | Lifestyle(3)  | Lifestyle(3)  | Lifestyle(3)  |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| age             | age(0)        | age(0)        | ... | age(4)        | age(4)        | age(4)        |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| cholestrol      | cholestrol(0) | cholestrol(0) | ... | cholestrol(2) | cholestrol(2) | cholestrol(2) |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| diet            | diet(0)       | diet(1)       | ... | diet(0)       | diet(1)       | diet(2)       |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| heartdisease(0) | 0.5           | 0.5           | ... | 0.5           | 0.0           | 0.0           |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n",
+      "| heartdisease(1) | 0.5           | 0.5           | ... | 0.5           | 1.0           | 1.0           |\n",
+      "+-----------------+---------------+---------------+-----+---------------+---------------+---------------+\n"
+     ]
+    }
+   ],
+   "source": [
+    "from pgmpy.models import DiscreteBayesianNetwork\n",
+    "from pgmpy.estimators import MaximumLikelihoodEstimator\n",
+    "model = DiscreteBayesianNetwork([\n",
+    "    ('age', 'heartdisease'), \n",
+    "    ('Gender', 'heartdisease'), \n",
+    "    ('Family', 'heartdisease'),\n",
+    "    ('diet', 'heartdisease'), \n",
+    "    ('Lifestyle', 'heartdisease'),\n",
+    "    ('cholestrol', 'heartdisease') ])\n",
+    "mle = MaximumLikelihoodEstimator(model, df) \n",
+    "cpds = mle.get_parameters() \n",
+    "model.add_cpds(*cpds)\n",
+    "print(model.get_cpds('heartdisease'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "58ae10f8-19bd-4aa0-a4e4-b8fda8a4de76",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "+--------+-------+\n",
+      "| age(0) | 0.23  |\n",
+      "+--------+-------+\n",
+      "| age(1) | 0.186 |\n",
+      "+--------+-------+\n",
+      "| age(2) | 0.17  |\n",
+      "+--------+-------+\n",
+      "| age(3) | 0.202 |\n",
+      "+--------+-------+\n",
+      "| age(4) | 0.212 |\n",
+      "+--------+-------+\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(model.get_cpds('age'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "408fec03-beaf-4c38-9857-8f8355eae0a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "+-----------+-------+\n",
+      "| Gender(0) | 0.528 |\n",
+      "+-----------+-------+\n",
+      "| Gender(1) | 0.472 |\n",
+      "+-----------+-------+\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(model.get_cpds('Gender'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "39b36609-0f9f-44cd-8643-5f3af877f2d6",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "+-----------+-------+\n",
+      "| Family(0) | 0.376 |\n",
+      "+-----------+-------+\n",
+      "| Family(1) | 0.624 |\n",
+      "+-----------+-------+\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(model.get_cpds('Family'))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.9"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
